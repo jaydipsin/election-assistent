@@ -1,0 +1,100 @@
+@use '../shared/styles/page-shell';
+
+.guide-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-bottom: var(--space-12);
+}
+
+.category-btn {
+  flex: 1;
+  min-width: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-6) var(--space-4);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-base);
+
+  &--active {
+    border-color: var(--color-navy);
+    background: var(--color-navy-50);
+    color: var(--color-navy);
+  }
+
+  &__icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    background: var(--color-bg-secondary);
+    color: var(--color-text-secondary);
+  }
+
+  &--active &__icon {
+    background: var(--color-navy);
+    color: white;
+  }
+
+  &__label {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+  }
+}
+
+.guide-content {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  border: 1px solid var(--color-border-light);
+  box-shadow: var(--shadow-sm);
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.step-card {
+  display: flex;
+  gap: var(--space-5);
+
+  &__number {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--color-saffron-50);
+    color: var(--color-saffron-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--weight-bold);
+    font-size: var(--text-lg);
+    border: 2px solid var(--color-saffron-100);
+  }
+
+  &__content {
+    h4 {
+      margin-bottom: var(--space-2);
+      color: var(--color-text-primary);
+    }
+
+    p {
+      font-size: var(--text-sm);
+      line-height: var(--leading-relaxed);
+    }
+  }
+}

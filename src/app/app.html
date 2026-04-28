@@ -1,0 +1,11 @@
+<app-header (menuToggle)="toggleSidebar()" />
+
+<app-sidebar [isOpen]="isSidebarOpen()" (sidebarClose)="closeSidebar()" />
+
+<main class="main-content" role="main" id="main-content">
+  <router-outlet />
+</main>
+
+<app-footer />
+
+<app-floating-chatbot />

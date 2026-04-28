@@ -1,0 +1,71 @@
+<footer class="footer" role="contentinfo">
+  <div class="footer__inner">
+    <!-- Disclaimer Banner -->
+    <div class="footer__disclaimer">
+      <div class="footer__disclaimer-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+      </div>
+      <p class="footer__disclaimer-text">{{ lang.t('footer.disclaimer') }}</p>
+    </div>
+
+    <!-- Main Footer Content -->
+    <div class="footer__content">
+      <!-- Brand -->
+      <div class="footer__brand">
+        <div class="footer__brand-logo">
+          <svg width="24" height="24" viewBox="0 0 32 32" fill="none">
+            <rect width="32" height="32" rx="8" fill="#000080"/>
+            <path d="M8 10h16v2H8zm0 5h16v2H8zm0 5h16v2H8z" fill="#FF9933"/>
+            <circle cx="16" cy="16" r="3" fill="#138808"/>
+          </svg>
+          <span class="footer__brand-name">मतदान Matdaan</span>
+        </div>
+        <p class="footer__brand-desc">{{ lang.t('footer.madeWith') }}</p>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="footer__links">
+        <h4 class="footer__links-title">{{ lang.language() === 'en' ? 'Quick Links' : 'त्वरित लिंक' }}</h4>
+        <a routerLink="/" class="footer__link">{{ lang.t('nav.home') }}</a>
+        <a routerLink="/voting-guide" class="footer__link">{{ lang.t('nav.votingGuide') }}</a>
+        <a routerLink="/election-types" class="footer__link">{{ lang.t('nav.electionTypes') }}</a>
+        <a routerLink="/chatbot" class="footer__link">{{ lang.t('nav.chatbot') }}</a>
+      </div>
+
+      <!-- Resources -->
+      <div class="footer__links">
+        <h4 class="footer__links-title">{{ lang.language() === 'en' ? 'Official Resources' : 'आधिकारिक संसाधन' }}</h4>
+        <a href="https://eci.gov.in" target="_blank" rel="noopener noreferrer" class="footer__link footer__link--external">
+          Election Commission of India
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+            <polyline points="15 3 21 3 21 9"/>
+            <line x1="10" y1="14" x2="21" y2="3"/>
+          </svg>
+        </a>
+        <a href="https://voters.eci.gov.in" target="_blank" rel="noopener noreferrer" class="footer__link footer__link--external">
+          National Voters' Service Portal
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+            <polyline points="15 3 21 3 21 9"/>
+            <line x1="10" y1="14" x2="21" y2="3"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="footer__bottom">
+      <p class="footer__copyright">© {{ currentYear }} Matdaan. {{ lang.t('footer.educational') }}</p>
+      <div class="footer__flag">
+        <span class="footer__flag-stripe footer__flag-stripe--saffron"></span>
+        <span class="footer__flag-stripe footer__flag-stripe--white"></span>
+        <span class="footer__flag-stripe footer__flag-stripe--green"></span>
+      </div>
+    </div>
+  </div>
+</footer>

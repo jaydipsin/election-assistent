@@ -1,0 +1,171 @@
+<div class="page-shell">
+  <div class="container journey-container">
+    
+    <!-- Progress Stepper -->
+    <div class="progress-stepper">
+      <div class="progress-stepper__bar-bg">
+        <div class="progress-stepper__bar-fill" [style.width]="progressWidth()"></div>
+      </div>
+      <div class="progress-stepper__info">
+        <span>{{ lang.t('journey.title') }}</span>
+        <span>{{ currentStep() }} / {{ totalSteps }}</span>
+      </div>
+    </div>
+
+    <!-- Step Content Area -->
+    <div class="step-content" [@stepAnimation]="currentStep()">
+      <div class="step-content__header">
+        <div>
+          <h2 class="step-content__title">{{ lang.t('journey.step' + currentStep() + '.title') }}</h2>
+          <p class="step-content__desc">{{ lang.t('journey.step' + currentStep() + '.desc') }}</p>
+        </div>
+        <button class="btn btn--icon btn--outline" (click)="speak(lang.t('journey.step' + currentStep() + '.desc'))" title="Listen">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+        </button>
+      </div>
+
+      <!-- Step Visuals -->
+      <div class="step-visual">
+        
+        <!-- Step 1: ID Card -->
+        @if (currentStep() === 1) {
+          <div class="id-card">
+            <div class="id-card__header"></div>
+            <div style="display: flex; gap: 15px;">
+              <div class="id-card__photo"></div>
+              <div class="id-card__lines">
+                <div></div><div></div><div></div>
+              </div>
+            </div>
+            <div class="id-card__lines" style="margin-top: 10px;">
+              <div style="width: 100%;"></div>
+            </div>
+          </div>
+        }
+
+        <!-- Step 2: Polling Station -->
+        @if (currentStep() === 2) {
+          <div class="animate-fade-in" style="text-align: center;">
+            <svg width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="var(--color-navy)" stroke-width="1.5">
+              <path d="M3 21h18M3 10l9-7 9 7v11H3V10z"></path>
+              <circle cx="12" cy="13" r="3"></circle>
+            </svg>
+            <div style="margin-top: 20px; font-weight: bold; color: var(--color-navy);">7:00 AM - 6:00 PM</div>
+          </div>
+        }
+
+        <!-- Step 3: Queue -->
+        @if (currentStep() === 3) {
+          <div class="queue-visual" [@listAnimation]>
+            <div style="display: flex; gap: 10px;">
+              @for (i of [1,2,3,4,5]; track i) {
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="var(--color-text-muted)"><circle cx="12" cy="7" r="4"></circle><path d="M5.5 21c0-4.5 2-5 6.5-5s6.5.5 6.5 5"></path></svg>
+              }
+            </div>
+          </div>
+        }
+
+        <!-- Step 4: Verification -->
+        @if (currentStep() === 4) {
+          <div class="ink-mark">
+            <div class="finger">
+              <div class="ink"></div>
+            </div>
+          </div>
+        }
+
+        <!-- Step 5 & 7: EVM & Simulator -->
+        @if (currentStep() === 5 || currentStep() === 7) {
+          <div class="evm-sim">
+            <div class="ballot-unit">
+              <div style="text-align: center; font-size: 10px; margin-bottom: 5px;">BALLOT UNIT</div>
+              @for (cand of ['A', 'B', 'C']; track cand) {
+                <div class="candidate-row">
+                  <div class="symbol"></div>
+                  <div class="name">{{ lang.t('journey.candidate') }} {{ cand }}</div>
+                  <div class="lamp" [class.lit]="selectedCandidate() === cand"></div>
+                  <div class="vote-btn" 
+                       [class.active]="selectedCandidate() === cand"
+                       (click)="currentStep() === 7 ? simulateVote(cand) : null"></div>
+                </div>
+              }
+            </div>
+            <div class="vvpat-unit">
+              <div style="text-align: center; font-size: 10px;">VVPAT</div>
+              <div class="window">
+                <div class="slip" [class.visible]="showVVPAT()">
+                  <div style="border: 1px solid #000; padding: 2px;">{{ selectedCandidate() }}</div>
+                  <div style="font-size: 8px; margin-top: 5px;">MATDAAN 2024</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+
+        <!-- Step 6: VVPAT Detail -->
+        @if (currentStep() === 6) {
+          <div style="text-align: center;">
+            <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="var(--color-green)" stroke-width="1.5">
+              <path d="M21 7V3h-4M7 3H3v4M3 17v4h4M17 21h4v-4"></path>
+              <rect x="7" y="7" width="10" height="10" rx="1"></rect>
+              <path d="M12 7v10M7 12h10"></path>
+            </svg>
+            <div style="margin-top: 15px; color: var(--color-green-dark); font-weight: bold;">Verify your vote for 7 seconds</div>
+          </div>
+        }
+
+        <!-- Step 8: Success -->
+        @if (currentStep() === 8) {
+          <div class="animate-fade-in" style="text-align: center;">
+            <div style="font-size: 60px;">🗳️</div>
+            <h3 style="color: var(--color-green); margin-top: 15px;">{{ lang.t('journey.congrats') }}</h3>
+            <button class="btn btn--outline" style="margin-top: 20px;" (click)="goToStep(1); resetSim()">Restart Journey</button>
+          </div>
+        }
+
+      </div>
+
+      <!-- Warning Section -->
+      <div class="warning-section" style="margin-top: auto; padding-top: var(--space-6); border-top: 1px solid var(--color-border-light);">
+        <div style="display: flex; gap: var(--space-8);">
+          <div style="flex: 1;">
+            <h4 style="color: var(--color-green-dark); display: flex; align-items: center; gap: 8px;">
+              ✅ {{ lang.t('journey.dos') }}
+            </h4>
+            <p style="font-size: var(--text-sm);">{{ lang.t('journey.bringId') }}</p>
+          </div>
+          <div style="flex: 1;">
+            <h4 style="color: var(--color-error); display: flex; align-items: center; gap: 8px;">
+              ❌ {{ lang.t('journey.donts') }}
+            </h4>
+            <p style="font-size: var(--text-sm);">{{ lang.t('journey.noMobile') }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="journey-nav">
+        <button class="btn btn--outline" (click)="prevStep()" [disabled]="currentStep() === 1">
+          {{ lang.t('common.back') }}
+        </button>
+        <button class="btn btn--primary" (click)="nextStep()" [disabled]="currentStep() === totalSteps">
+          {{ lang.t('common.next') }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div style="margin-top: var(--space-10); display: flex; flex-wrap: wrap; gap: var(--space-3); justify-content: center;">
+      @for (i of [1,2,3,4,5,6,7,8]; track i) {
+        <button class="badge" 
+                [class.badge--navy]="currentStep() === i"
+                [class.badge--saffron]="currentStep() !== i"
+                (click)="goToStep(i)"
+                style="cursor: pointer; border: none;">
+          Step {{ i }}
+        </button>
+      }
+    </div>
+
+  </div>
+</div>

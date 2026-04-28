@@ -1,0 +1,250 @@
+@use '../shared/styles/page-shell';
+
+.journey-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding-bottom: var(--space-20);
+}
+
+// Progress Bar
+.progress-stepper {
+  margin-bottom: var(--space-10);
+  background: white;
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 1rem;
+  z-index: 10;
+
+  &__bar-bg {
+    height: 8px;
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    margin-bottom: var(--space-4);
+  }
+
+  &__bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-saffron), var(--color-green));
+    transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  &__info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--text-sm);
+    font-weight: var(--weight-bold);
+    color: var(--color-navy);
+  }
+}
+
+// Step Content
+.step-content {
+  background: white;
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--color-border-light);
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    margin-bottom: var(--space-8);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  &__title {
+    font-size: var(--text-3xl);
+    color: var(--color-navy);
+    margin-bottom: var(--space-2);
+  }
+
+  &__desc {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+  }
+}
+
+// Visuals for each step
+.step-visual {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: var(--space-8) 0;
+  min-height: 200px;
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  position: relative;
+  overflow: hidden;
+
+  // Step 1: ID Card
+  .id-card {
+    width: 280px;
+    height: 180px;
+    background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    padding: var(--space-4);
+    border: 4px solid var(--color-navy);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    animation: flip 4s infinite ease-in-out;
+
+    &__header { height: 20px; background: var(--color-saffron); width: 100%; border-radius: 2px; }
+    &__photo { width: 60px; height: 70px; background: var(--color-text-muted); border-radius: 4px; }
+    &__lines { flex: 1; display: flex; flex-direction: column; gap: 8px; 
+      div { height: 8px; background: var(--color-border); border-radius: 4px; }
+    }
+  }
+
+  // Step 4: Ink Mark
+  .ink-mark {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    
+    .finger {
+      width: 40px;
+      height: 100px;
+      background: #ffdbac;
+      border-radius: 20px 20px 10px 10px;
+      position: relative;
+      &::after {
+        content: '';
+        position: absolute;
+        top: 10px;
+        left: 5px;
+        right: 5px;
+        height: 25px;
+        background: rgba(0,0,0,0.1);
+        border-radius: 10px 10px 2px 2px;
+      }
+      .ink {
+        position: absolute;
+        top: 5px;
+        left: 15px;
+        width: 10px;
+        height: 30px;
+        background: #2b1b59;
+        border-radius: 5px;
+        animation: fadeIn 1s forwards;
+      }
+    }
+  }
+}
+
+// EVM Simulator Styles
+.evm-sim {
+  display: flex;
+  gap: var(--space-6);
+  width: 100%;
+  max-width: 600px;
+
+  .ballot-unit {
+    flex: 2;
+    background: #e0e0e0;
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    border: 3px solid #bcbcbc;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+
+    .candidate-row {
+      display: flex;
+      align-items: center;
+      background: white;
+      padding: var(--space-2);
+      border-radius: 4px;
+      gap: var(--space-3);
+      border: 1px solid #ddd;
+
+      .symbol { width: 30px; height: 30px; background: var(--color-bg-secondary); border-radius: 50%; }
+      .name { flex: 1; font-size: 12px; font-weight: bold; }
+      .vote-btn {
+        width: 40px;
+        height: 24px;
+        background: #0056b3;
+        border-radius: 4px;
+        cursor: pointer;
+        &:active { transform: scale(0.9); }
+        &.active { background: #ff0000; box-shadow: 0 0 10px #ff0000; }
+      }
+      .lamp { width: 12px; height: 12px; background: #555; border-radius: 50%; &.lit { background: #ff0000; box-shadow: 0 0 8px #ff0000; } }
+    }
+  }
+
+  .vvpat-unit {
+    flex: 1;
+    background: #444;
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    border: 2px solid #222;
+
+    .window {
+      height: 120px;
+      background: #222;
+      border-radius: 4px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+
+      .slip {
+        width: 80%;
+        height: 100px;
+        background: white;
+        color: black;
+        padding: var(--space-2);
+        font-size: 10px;
+        text-align: center;
+        transform: translateY(-110%);
+        &.visible { animation: slipDrop 3s forwards; }
+      }
+    }
+  }
+}
+
+// Navigation
+.journey-nav {
+  margin-top: var(--space-8);
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+
+  .btn { flex: 1; }
+}
+
+// Mobile specific
+@media (max-width: 640px) {
+  .step-content { padding: var(--space-4); min-height: auto; }
+  .evm-sim { flex-direction: column; }
+  .step-visual { min-height: 150px; }
+}
+
+// Animations
+@keyframes flip {
+  0%, 100% { transform: perspective(1000px) rotateY(0deg); }
+  50% { transform: perspective(1000px) rotateY(180deg); }
+}
+
+@keyframes slipDrop {
+  0% { transform: translateY(-110%); }
+  20% { transform: translateY(0); }
+  80% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(110%); opacity: 0; }
+}

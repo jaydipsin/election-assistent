@@ -1,0 +1,47 @@
+<div class="page-shell">
+  <div class="container">
+    <div class="page-shell__header">
+      <a routerLink="/" class="page-shell__back">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"/>
+          <polyline points="12 19 5 12 12 5"/>
+        </svg>
+        {{ lang.t('common.back') }}
+      </a>
+      <h1 class="page-shell__title">{{ lang.t('nav.chatbot') }}</h1>
+      <p class="page-shell__subtitle">
+        {{ lang.t('chatbot.subtitle') }}
+      </p>
+    </div>
+
+    <div class="chat-container">
+      <div class="chat-header">
+        <div class="chat-header__status"></div>
+        <span>Matdaan Assistant</span>
+      </div>
+
+      <div class="chat-messages" #scrollContainer>
+        @for (msg of messages(); track $index) {
+          <div class="message" [class.message--user]="msg.isUser" [class.message--bot]="!msg.isUser">
+            {{ msg.text }}
+          </div>
+        }
+      </div>
+
+      <form class="chat-input-area" (submit)="sendMessage(); $event.preventDefault()">
+        <input 
+          type="text" 
+          class="chat-input" 
+          [placeholder]="lang.t('chatbot.placeholder')"
+          [(ngModel)]="userInput"
+          name="userInput">
+        <button type="submit" class="send-btn" [disabled]="!userInput.trim()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

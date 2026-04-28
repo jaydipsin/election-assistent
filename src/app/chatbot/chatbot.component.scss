@@ -1,0 +1,111 @@
+@use '../shared/styles/page-shell';
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 600px;
+  background: var(--color-bg-card);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border-light);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+.chat-header {
+  padding: var(--space-4) var(--space-6);
+  background: var(--color-navy);
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+
+  &__status {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-success);
+    animation: pulse 2s infinite;
+  }
+}
+
+.chat-messages {
+  flex: 1;
+  padding: var(--space-6);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  background: var(--color-bg-secondary);
+}
+
+.message {
+  max-width: 80%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  animation: fadeInUp 0.3s ease-out forwards;
+
+  &--bot {
+    align-self: flex-start;
+    background: white;
+    color: var(--color-text-primary);
+    border-bottom-left-radius: 0;
+    box-shadow: var(--shadow-sm);
+  }
+
+  &--user {
+    align-self: flex-end;
+    background: var(--color-saffron);
+    color: var(--color-text-primary);
+    border-bottom-right-radius: 0;
+    font-weight: var(--weight-medium);
+  }
+}
+
+.chat-input-area {
+  padding: var(--space-4);
+  background: white;
+  border-top: 1px solid var(--color-border-light);
+  display: flex;
+  gap: var(--space-3);
+}
+
+.chat-input {
+  flex: 1;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: var(--text-sm);
+  transition: border-color var(--transition-fast);
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-navy);
+  }
+}
+
+.send-btn {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-navy);
+  color: white;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+
+  &:hover {
+    transform: scale(1.05);
+    background: var(--color-navy-light);
+  }
+
+  &:disabled {
+    background: var(--color-text-muted);
+    cursor: not-allowed;
+    transform: none;
+  }
+}
