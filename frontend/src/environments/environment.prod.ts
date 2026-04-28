@@ -10,5 +10,5 @@ export const environment = {
     appId: ""
   },
   geminiApiKey: "",
-  backendUrl: "https://your-deployed-backend-url.com/api"
+  backendUrl: "https://election-guide-101-914349781251.europe-west1.run.app"
 };
