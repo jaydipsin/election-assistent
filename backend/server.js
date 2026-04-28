@@ -2,108 +2,80 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const dotenv = require('dotenv');
-const admin = require('firebase-admin');
-const { GoogleGenerativeAI } = require('@google/generative-ai');
-const rateLimit = require('express-rate-limit');
+const { initializeApp } = require('firebase/app');
+const { getDatabase, ref, get, update } = require('firebase/database');
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Security Middleware
+// Security & Middleware
 app.use(helmet());
 app.use(cors({
   origin: process.env.FRONTEND_URL || 'http://localhost:4200'
 }));
 app.use(express.json());
 
-// Rate Limiting for Chat API
-const chatLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 50, // limit each IP to 50 requests per windowMs
-  message: { error: 'Too many requests, please try again later.' }
+// Firebase Client SDK Setup
+const firebaseConfig = {
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.DATABASE_URL,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID
+};
+
+const firebaseApp = initializeApp(firebaseConfig);
+const db = getDatabase(firebaseApp);
+
+// Attach Database to req for use in controllers if needed (optional)
+app.use((req, res, next) => {
+  req.db = db;
+  next();
 });
 
-// Firebase Admin Setup
-try {
-  const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: process.env.DATABASE_URL
-  });
-} catch (error) {
-  console.error('Firebase Admin Init Error:', error.message);
-}
+// Routes
+const electionRoutes = require('./routes/electionRoutes');
+const chatRoutes = require('./routes/chatRoutes');
 
-const db = admin.database();
+app.use('/api/election', electionRoutes);
+app.use('/api/chat', chatRoutes);
 
-// Gemini AI Setup
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({
-  model: "gemini-1.5-flash",
-  systemInstruction: `
-    You are the official Voter Education AI for Indian citizens. Your role is strictly educational. 
-    RULES: 
-    1. You MUST NOT answer political questions or show bias toward any party/leader. 
-    2. If asked 'who should I vote for?', explain the importance of personal research and the secret ballot. 
-    3. Provide factual info on EVMs, VVPATs, and ECI guidelines. 
-    4. Support Hindi and English. 
-    5. Refuse non-election queries.
-    6. Keep responses under 3 paragraphs.
-  `
-});
-
-// --- API ENDPOINTS ---
-
-// Get User Progress
+// Progress Endpoints (Kept in server.js for simplicity or can be moved to a controller)
 app.get('/api/progress/:sessionId', async (req, res) => {
+  const { sessionId } = req.params;
+  console.log(`[Database] Fetching progress for session: ${sessionId}`);
+  
   try {
-    const { sessionId } = req.params;
-    const snapshot = await db.ref(`sessions/${sessionId}/progress`).once('value');
+    const progressRef = ref(db, `sessions/${sessionId}/progress`);
+    
+    // Add a timeout promise to prevent hanging
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('Firebase timeout')), 5000)
+    );
+
+    const snapshot = await Promise.race([get(progressRef), timeoutPromise]);
+    
+    console.log(`[Database] Successfully retrieved data for ${sessionId}`);
     res.json(snapshot.val() || {});
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch progress' });
+    console.error(`[Database Error] Session ${sessionId}:`, error.message);
+    res.status(500).json({ error: 'Database connection failed or timed out' });
   }
 });
 
-// Update User Progress
 app.post('/api/progress/:sessionId', async (req, res) => {
   try {
     const { sessionId } = req.params;
     const { stepId, status } = req.body;
-    
-    await db.ref(`sessions/${sessionId}/progress`).update({
-      [stepId]: status,
-      lastUpdated: new Date().toISOString()
-    });
-    
+    const progressRef = ref(db, `sessions/${sessionId}/progress`);
+    await update(progressRef, { [stepId]: status, lastUpdated: new Date().toISOString() });
     res.json({ success: true });
   } catch (error) {
     res.status(500).json({ error: 'Failed to update progress' });
-  }
-});
-
-// Secure Chat Proxy
-app.post('/api/chat', chatLimiter, async (req, res) => {
-  try {
-    const { message, history } = req.body;
-    
-    const chat = model.startChat({
-      history: (history || []).map(msg => ({
-        role: msg.isUser ? "user" : "model",
-        parts: [{ text: msg.text }]
-      }))
-    });
-
-    const result = await chat.sendMessage(message);
-    const response = await result.response;
-    res.json({ text: response.text() });
-  } catch (error) {
-    console.error('Chat Error:', error);
-    res.status(500).json({ 
-      text: "The assistant is currently busy, please try again later or check our static Voting Guide." 
-    });
   }
 });
 
