@@ -1,5 +1,5 @@
 export const environment = {
-  production: false,
+  production: true,
   firebase: {
     apiKey: "",
     authDomain: "",
@@ -9,5 +9,6 @@ export const environment = {
     messagingSenderId: "",
     appId: ""
   },
-  geminiApiKey: ""
+  geminiApiKey: "",
+  backendUrl: "https://your-deployed-backend-url.com/api"
 };

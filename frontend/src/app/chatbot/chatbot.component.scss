@@ -61,6 +61,12 @@
     border-bottom-right-radius: 0;
     font-weight: var(--weight-medium);
   }
+
+  &.typing {
+    opacity: 0.7;
+    font-style: italic;
+    animation: pulse 1s infinite;
+  }
 }
 
 .chat-input-area {
