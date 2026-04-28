@@ -1,0 +1,90 @@
+<div class="voter-container animate-fade-in">
+  <header class="voter-header">
+    <button class="btn-back" routerLink="/">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+    </button>
+    <div class="header-badge animate-fade-in-up">
+      <span class="badge badge--saffron">{{ lang.language() === 'en' ? 'Essential Guide' : 'आवश्यक गाइड' }}</span>
+    </div>
+    <h1 class="animate-fade-in-up" style="animation-delay: 0.1s">
+      {{ lang.language() === 'en' ? 'First-Time Voter Journey' : 'पहली बार मतदाता की यात्रा' }}
+    </h1>
+    <p class="subtitle animate-fade-in-up" style="animation-delay: 0.2s">
+      {{ lang.language() === 'en' ? 'Everything you need to know to cast your first vote in the 2026 elections.' : '2026 के चुनावों में अपना पहला वोट डालने के लिए आपको जो कुछ भी जानने की जरूरत है।' }}
+    </p>
+  </header>
+
+  <div class="learning-section card card--flat mb-10 animate-fade-in-up" style="animation-delay: 0.3s">
+    <div class="card__body">
+      <h3>{{ lang.language() === 'en' ? "What You'll Learn" : 'आप क्या सीखेंगे' }}</h3>
+      <div class="learning-grid">
+        <div class="learning-item">
+          <span class="dot"></span>
+          <span>{{ lang.language() === 'en' ? 'Detailed registration process' : 'विस्तृत पंजीकरण प्रक्रिया' }}</span>
+        </div>
+        <div class="learning-item">
+          <span class="dot"></span>
+          <span>{{ lang.language() === 'en' ? 'Document verification steps' : 'दस्तावेज सत्यापन चरण' }}</span>
+        </div>
+        <div class="learning-item">
+          <span class="dot"></span>
+          <span>{{ lang.language() === 'en' ? 'EPIC (Voter ID) generation' : 'EPIC (वोटर आईडी) जेनरेशन' }}</span>
+        </div>
+        <div class="learning-item">
+          <span class="dot"></span>
+          <span>{{ lang.language() === 'en' ? 'Locating your polling station' : 'अपने मतदान केंद्र का पता लगाना' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="timeline">
+    @for (step of steps; track step.id; let i = $index) {
+      <div class="timeline-item" [style.animation-delay]="(0.4 + i * 0.1) + 's'">
+        <div class="timeline-marker">
+          <div class="marker-circle">{{ step.icon }}</div>
+          @if (i < steps.length - 1) {
+            <div class="marker-line"></div>
+          }
+        </div>
+        
+        <div class="timeline-content">
+          <div class="card">
+            <span class="step-number">Step 0{{ step.id }}</span>
+            <h3>{{ lang.language() === 'en' ? step.title.en : step.title.hi }}</h3>
+            <p>{{ lang.language() === 'en' ? step.description.en : step.description.hi }}</p>
+            
+            @if (step.link) {
+              <a [href]="step.link" target="_blank" class="btn btn--secondary btn--sm mt-3">
+                {{ lang.language() === 'en' ? step.linkText.en : step.linkText.hi }}
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ms-1"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              </a>
+            }
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="bottom-info card animate-fade-in-up" style="animation-delay: 1s">
+    <div class="card__body">
+      <h3>{{ lang.language() === 'en' ? 'Important Documents Needed' : 'आवश्यक महत्वपूर्ण दस्तावेज' }}</h3>
+      <ul class="doc-list">
+        <li>
+          <span class="doc-icon">👤</span>
+          <div>
+            <strong>{{ lang.language() === 'en' ? 'Age Proof' : 'आयु प्रमाण' }}</strong>
+            <p>{{ lang.language() === 'en' ? 'Birth Certificate, Aadhaar Card, or 10th Standard Certificate.' : 'जन्म प्रमाण पत्र, आधार कार्ड, या 10वीं कक्षा का प्रमाण पत्र।' }}</p>
+          </div>
+        </li>
+        <li>
+          <span class="doc-icon">🏠</span>
+          <div>
+            <strong>{{ lang.language() === 'en' ? 'Address Proof' : 'पता प्रमाण' }}</strong>
+            <p>{{ lang.language() === 'en' ? 'Electricity bill, Water bill, Aadhaar Card, or Passport.' : 'बिजली का बिल, पानी का बिल, आधार कार्ड, या पासपोर्ट।' }}</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

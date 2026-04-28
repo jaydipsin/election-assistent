@@ -282,7 +282,8 @@ ul, ol {
     &:hover {
       background-color: var(--color-saffron-dark);
       border-color: var(--color-saffron-dark);
-      box-shadow: 0 4px 14px rgba(255, 153, 51, 0.35);
+      color: var(--color-white);
+      box-shadow: 0 6px 20px rgba(255, 153, 51, 0.4);
     }
   }
 
@@ -295,7 +296,8 @@ ul, ol {
     &:hover {
       background-color: var(--color-navy-light);
       border-color: var(--color-navy-light);
-      box-shadow: 0 4px 14px rgba(0, 0, 128, 0.3);
+      color: var(--color-white);
+      box-shadow: 0 6px 20px rgba(0, 0, 128, 0.4);
     }
   }
 
@@ -340,7 +342,8 @@ ul, ol {
     &:hover {
       background-color: var(--color-green-dark);
       border-color: var(--color-green-dark);
-      box-shadow: 0 4px 14px rgba(19, 136, 8, 0.3);
+      color: var(--color-text-inverse);
+      box-shadow: 0 6px 20px rgba(19, 136, 8, 0.4);
     }
   }
 

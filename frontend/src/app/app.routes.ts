@@ -27,6 +27,11 @@ export const routes: Routes = [
     title: 'Voting Day Journey - Matdaan'
   },
   {
+    path: 'first-time-voter',
+    loadComponent: () => import('./first-time-voter/first-time-voter.component').then(m => m.FirstTimeVoterComponent),
+    title: 'First-Time Voter Guide - Matdaan'
+  },
+  {
     path: '**',
     redirectTo: '',
     pathMatch: 'full'

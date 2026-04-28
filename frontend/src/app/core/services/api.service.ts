@@ -10,6 +10,11 @@ export class ApiService {
   private http = inject(HttpClient);
   private apiUrl = environment.backendUrl || 'http://localhost:5000/api';
 
+  // Election Configuration
+  getElectionConfig(type: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/election/config/${type}`);
+  }
+
   // Progress Endpoints
   getProgress(sessionId: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/progress/${sessionId}`);
@@ -20,7 +25,7 @@ export class ApiService {
   }
 
   // Chat Endpoint
-  sendMessage(message: string, history: any[]): Observable<any> {
-    return this.http.post(`${this.apiUrl}/chat`, { message, history });
+  sendMessage(message: string, history: any[], electionType?: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/chat`, { message, history, electionType });
   }
 }

@@ -16,14 +16,21 @@
 
     <div class="chat-container">
       <div class="chat-header">
-        <div class="chat-header__status"></div>
-        <span>Matdaan Assistant</span>
+        <div class="chat-header__info">
+          <div class="chat-header__status"></div>
+          <span>Matdaan Assistant</span>
+        </div>
+        <div class="gemini-badge">Powered by Google Gemini</div>
       </div>
 
       <div class="chat-messages" #scrollContainer>
         @for (msg of messages(); track $index) {
           <div class="message" [class.message--user]="msg.isUser" [class.message--bot]="!msg.isUser">
-            {{ msg.text }}
+            @if (msg.isUser) {
+              {{ msg.text }}
+            } @else {
+              <div class="markdown-content" [innerHTML]="(msg.formattedText || msg.text) | safeHtml"></div>
+            }
           </div>
         }
         @if (isLoading()) {

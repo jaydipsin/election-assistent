@@ -1,0 +1,93 @@
+<div class="bottom-sheet-overlay" (click)="close.emit()"></div>
+<div class="bottom-sheet-container">
+  <div class="bottom-sheet-handle"></div>
+  
+  <div class="animation-wrapper">
+    <div class="animation-stage">
+      @if (currentFrame() === 1) {
+        <div class="stage-visual" @fadeSlide>
+          <div class="officer-visual">
+            <div class="officer-desk"></div>
+            <div class="officer"></div>
+            <div class="voter-mini"></div>
+            <div class="document-check">🔍</div>
+          </div>
+        </div>
+      }
+      @if (currentFrame() === 2) {
+        <div class="stage-visual" @fadeSlide>
+          <div class="ink-visual">
+            <div class="hand">
+              <div class="finger-mark"></div>
+              <div class="ink-drop"></div>
+            </div>
+            <div class="slip-give">📄</div>
+          </div>
+        </div>
+      }
+      @if (currentFrame() === 3) {
+        <div class="stage-visual" @fadeSlide>
+          <div class="cu-visual">
+            <div class="control-unit">
+              <div class="cu-lamp active"></div>
+              <div class="cu-button-press"></div>
+            </div>
+          </div>
+        </div>
+      }
+      @if (currentFrame() === 4) {
+        <div class="stage-visual" @fadeSlide>
+          <div class="evm-visual">
+            <div class="ballot-unit-mini">
+              <div class="evm-button press-animation"></div>
+              <div class="evm-lamp-red"></div>
+            </div>
+          </div>
+        </div>
+      }
+      @if (currentFrame() === 5) {
+        <div class="stage-visual" @fadeSlide>
+          <div class="vvpat-visual">
+            <div class="vvpat-unit-mini">
+              <div class="vvpat-window">
+                @if (showSlip()) {
+                  <div class="vvpat-slip-anim">
+                    <div class="slip-content">
+                      <span>1</span>
+                      <span>BJP</span>
+                      <span>Lotus</span>
+                    </div>
+                  </div>
+                }
+              </div>
+              @if (isBeeping()) {
+                <div class="beep-wave"></div>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="animation-text">
+      <h2>{{ lang.language() === 'en' ? frames[currentFrame()-1].title.en : frames[currentFrame()-1].title.hi }}</h2>
+      <p>{{ lang.language() === 'en' ? frames[currentFrame()-1].description.en : frames[currentFrame()-1].description.hi }}</p>
+    </div>
+
+    <div class="animation-controls">
+      <button class="btn btn-ghost" (click)="prevFrame()" [disabled]="currentFrame() === 1">
+        {{ lang.t('common.back') }}
+      </button>
+      
+      <div class="frame-indicators">
+        @for (f of frames; track f.id) {
+          <div class="indicator" [class.active]="f.id <= currentFrame()"></div>
+        }
+      </div>
+
+      <button class="btn btn-primary" (click)="nextFrame()">
+        {{ currentFrame() === totalFrames ? (lang.language() === 'en' ? 'Finish' : 'समाप्त करें') : lang.t('common.next') }}
+      </button>
+    </div>
+  </div>
+</div>

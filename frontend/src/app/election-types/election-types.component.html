@@ -1,37 +1,22 @@
-<div class="page-shell">
-  <div class="container">
-    <div class="page-shell__header">
-      <a routerLink="/" class="page-shell__back">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="19" y1="12" x2="5" y2="12"/>
-          <polyline points="12 19 5 12 12 5"/>
-        </svg>
-        {{ lang.t('common.back') }}
-      </a>
-      <h1 class="page-shell__title">{{ lang.t('nav.electionTypes') }}</h1>
-      <p class="page-shell__subtitle">
-        {{ lang.language() === 'en' ? 'Understand the different types of elections held in India at various levels of government.' : 'भारत सरकार के विभिन्न स्तरों पर आयोजित विभिन्न प्रकार के चुनावों को समझें।' }}
-      </p>
-    </div>
+<div class="selector-container">
+  <div class="page-shell__header">
+    <h1 class="page-shell__title">{{ lang.t('common.explore') }}</h1>
+    <p class="page-shell__subtitle">
+      {{ lang.language() === 'hi' ? 'भारतीय चुनाव के प्रकार और मतदान प्रक्रिया के बारे में जानें।' : 'Learn about the different types of Indian elections and their specific voting processes.' }}
+    </p>
+  </div>
 
-    <div class="election-grid">
-      @for (type of electionTypes; track type.id) {
-        <div class="election-card">
-          <div class="election-card__icon">
-            @if (type.icon === 'users') {
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-            } @else if (type.icon === 'landmark') {
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="22" x2="21" y2="22"></line><line x1="6" y1="18" x2="6" y2="11"></line><line x1="10" y1="18" x2="10" y2="11"></line><line x1="14" y1="18" x2="14" y2="11"></line><line x1="18" y1="18" x2="18" y2="11"></line><polygon points="12 2 20 7 4 7 12 2"></polygon></svg>
-            } @else if (type.icon === 'map') {
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
-            } @else if (type.icon === 'home') {
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-            }
-          </div>
-          <h3 class="election-card__title">{{ lang.language() === 'en' ? type.titleEn : type.titleHi }}</h3>
-          <p class="election-card__desc">{{ lang.language() === 'en' ? type.descEn : type.descHi }}</p>
-        </div>
-      }
-    </div>
+  <div class="selector-grid">
+    @for (opt of options; track opt.id) {
+      <div class="election-card" 
+           [style.--card-color]="opt.color"
+           (click)="selectElection(opt.id)">
+        <div class="election-card__icon">{{ opt.icon }}</div>
+        <h2 class="election-card__title">{{ lang.t('journey.' + opt.id + '.title') || opt.id }}</h2>
+        <p class="election-card__desc">
+          {{ lang.t('journey.' + opt.id + '.context') || 'View voting steps and rules for this election.' }}
+        </p>
+      </div>
+    }
   </div>
 </div>

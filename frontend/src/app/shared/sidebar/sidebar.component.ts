@@ -22,12 +22,6 @@ export class SidebarComponent {
       exact: true
     },
     {
-      route: '/voting-guide',
-      labelKey: 'nav.votingGuide',
-      icon: 'book',
-      exact: false
-    },
-    {
       route: '/election-types',
       labelKey: 'nav.electionTypes',
       icon: 'layers',

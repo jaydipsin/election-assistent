@@ -4,9 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { ChatbotService } from '@core/services/chatbot.service';
 import { LanguageService } from '@core/services/language.service';
+import { ElectionDataService } from '@core/services/election-data.service';
+import { MarkdownService } from '@core/services/markdown.service';
+import { SafeHtmlPipe } from '../pipes/safe-html.pipe';
 
 interface Message {
   text: string;
+  formattedText?: string;
   isUser: boolean;
   timestamp: Date;
 }
@@ -14,7 +18,7 @@ interface Message {
 @Component({
   selector: 'app-floating-chatbot',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, SafeHtmlPipe],
   templateUrl: './floating-chatbot.component.html',
   styleUrl: './floating-chatbot.component.scss',
   animations: [
@@ -31,6 +35,8 @@ interface Message {
 })
 export class FloatingChatbotComponent implements AfterViewChecked {
   private chatbotService = inject(ChatbotService);
+  private dataService = inject(ElectionDataService);
+  private markdownService = inject(MarkdownService);
   lang = inject(LanguageService);
 
   @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
@@ -65,10 +71,15 @@ export class FloatingChatbotComponent implements AfterViewChecked {
     this.isLoading.set(true);
 
     // Get AI response
-    const response = await this.chatbotService.sendMessage(text, this.messages());
+    const electionType = this.dataService.currentElectionType();
+    const response = await this.chatbotService.sendMessage(text, this.messages(), electionType || undefined);
     
+    // Parse response
+    const formatted = await this.markdownService.parse(response);
+
     this.messages.update(m => [...m, { 
-      text: response, 
+      text: response,
+      formattedText: formatted,
       isUser: false, 
       timestamp: new Date() 
     }]);

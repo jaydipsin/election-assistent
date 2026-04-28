@@ -1,6 +1,18 @@
 <div class="page-shell">
   <div class="container journey-container">
     
+    <!-- Interactive Animation Card -->
+    <div class="animation-promo card card-gradient animate-fadeInUp" (click)="showBoothAnimation.set(true)">
+      <div class="animation-promo__content">
+        <span class="badge badge-info">{{ lang.language() === 'en' ? 'Interactive Guide' : 'इंटरएक्टिव गाइड' }}</span>
+        <h3>{{ lang.language() === 'en' ? 'Inside the Polling Booth: How to Vote' : 'मतदान केंद्र के अंदर: वोट कैसे डालें' }}</h3>
+        <p>{{ lang.language() === 'en' ? 'Watch an animated sequence of your physical journey inside the polling station.' : 'मतदान केंद्र के अंदर अपनी भौतिक यात्रा का एनिमेटेड क्रम देखें।' }}</p>
+      </div>
+      <div class="animation-promo__icon">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+      </div>
+    </div>
+
     <!-- Progress Stepper -->
     <div class="progress-stepper">
       <div class="progress-stepper__bar-bg">
@@ -168,4 +180,8 @@
     </div>
 
   </div>
+
+  @if (showBoothAnimation()) {
+    <app-polling-booth-animation (close)="showBoothAnimation.set(false)"></app-polling-booth-animation>
+  }
 </div>

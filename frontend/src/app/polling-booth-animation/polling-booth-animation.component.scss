@@ -1,0 +1,187 @@
+.bottom-sheet-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 128, 0.2);
+  backdrop-filter: blur(8px);
+  z-index: var(--z-overlay);
+  animation: fadeIn 0.3s ease-out;
+}
+
+.bottom-sheet-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--color-white);
+  border-top-left-radius: var(--radius-xl);
+  border-top-right-radius: var(--radius-xl);
+  padding: var(--space-4) var(--space-8) var(--space-12);
+  z-index: var(--z-modal);
+  box-shadow: 0 -20px 60px rgba(0, 0, 0, 0.15);
+  animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.bottom-sheet-handle {
+  width: 50px;
+  height: 5px;
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-full);
+  margin: 0 auto var(--space-8);
+}
+
+.animation-wrapper {
+  max-width: 650px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.animation-stage {
+  height: 280px;
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-10);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  border: 2px solid var(--color-border-light);
+  box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.animation-text {
+  margin-bottom: var(--space-10);
+  
+  h2 {
+    font-size: 1.75rem;
+    margin-bottom: var(--space-3);
+    color: var(--color-navy);
+  }
+
+  p {
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    font-size: 1.1rem;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+}
+
+.animation-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+
+  .frame-indicators {
+    display: flex;
+    gap: var(--space-3);
+
+    .indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--color-border);
+      transition: all var(--transition-base);
+
+      &.active {
+        background: var(--color-navy);
+        transform: scale(1.4);
+        box-shadow: 0 0 10px var(--color-navy-100);
+      }
+    }
+  }
+}
+
+// Visuals
+.officer-visual {
+  position: relative;
+  width: 250px;
+  height: 180px;
+
+  .officer-desk {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    height: 12px;
+    background: #8B4513;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+
+  .officer {
+    position: absolute;
+    bottom: 37px;
+    left: 50px;
+    width: 50px;
+    height: 70px;
+    background: var(--color-navy-100);
+    border-radius: 12px 12px 0 0;
+  }
+
+  .voter-mini {
+    position: absolute;
+    bottom: 37px;
+    right: 50px;
+    width: 50px;
+    height: 70px;
+    background: var(--color-saffron-100);
+    border-radius: 12px 12px 0 0;
+    animation: slideInRight 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .document-check {
+    position: absolute;
+    top: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2.5rem;
+    animation: pulse-glow 1.5s infinite;
+  }
+}
+
+.ink-visual {
+  font-size: 5rem;
+  position: relative;
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
+  
+  .finger-mark {
+    animation: inkDrop 1.2s ease-in-out infinite;
+  }
+}
+
+.vvpat-slip-anim {
+  background: white;
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  animation: slipDrop 7s linear forwards;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes inkDrop {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.15); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes slipDrop {
+  0% { transform: translateY(-110%); opacity: 0; }
+  10% { transform: translateY(0); opacity: 1; }
+  90% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(80px); opacity: 0; }
+}
+
+@keyframes pulse-glow {
+  0% { transform: translateX(-50%) scale(1); opacity: 0.8; }
+  50% { transform: translateX(-50%) scale(1.2); opacity: 1; }
+  100% { transform: translateX(-50%) scale(1); opacity: 0.8; }
+}

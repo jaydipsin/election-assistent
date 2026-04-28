@@ -26,7 +26,11 @@
     <div class="chat-messages" #scrollContainer>
       @for (msg of messages(); track $index) {
         <div class="message" [class.message--user]="msg.isUser" [class.message--bot]="!msg.isUser">
-          {{ msg.text }}
+          @if (msg.isUser) {
+            {{ msg.text }}
+          } @else {
+            <div class="markdown-content" [innerHTML]="(msg.formattedText || msg.text) | safeHtml"></div>
+          }
         </div>
       }
 
@@ -41,7 +45,8 @@
       <input 
         type="text" 
         [placeholder]="lang.t('chatbot.placeholder')"
-        [(ngModel)]="userInput"
+        [ngModel]="userInput()"
+        (ngModelChange)="userInput.set($event)"
         [ngModelOptions]="{standalone: true}"
         (keyup.enter)="sendMessage()">
       <button type="submit" [disabled]="!userInput().trim() || isLoading()">

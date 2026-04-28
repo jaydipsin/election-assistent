@@ -19,7 +19,10 @@ const TRANSLATIONS: TranslationMap = {
 
   // Chatbot
   'chatbot.greeting': { en: 'Hello! I am your Matdaan Assistant. How can I help you today?', hi: 'नमस्ते! मैं आपका मतदान सहायक हूं। मैं आज आपकी क्या सहायता कर सकता हूं?' },
-  'chatbot.subtitle': { en: 'Ask anything about voting, registration, and elections in India.', hi: 'भारत में मतदान, पंजीकरण और चुनावों के बारे में कुछ भी पूछें।' },
+  'chatbot.subtitle': { 
+    en: 'Ask anything about voting, registration, and elections in India. Powered by Gemini API.', 
+    hi: 'भारत में मतदान, पंजीकरण और चुनावों के बारे में कुछ भी पूछें। मिथुन (Gemini) API द्वारा संचालित।' 
+  },
   'chatbot.placeholder': { en: 'Type your question...', hi: 'अपना सवाल टाइप करें...' },
   'chatbot.defaultResponse': { en: 'That is a great question! For detailed information, please check the Voting Guide section or visit the official ECI website.', hi: 'यह एक अच्छा सवाल है! विस्तृत जानकारी के लिए, कृपया मतदान गाइड अनुभाग देखें या आधिकारिक ईसीआई वेबसाइट पर जाएं।' },
   'chatbot.regResponse': { en: 'To register as a new voter, you can visit the Voter Service Portal at voters.eci.gov.in and fill Form 6.', hi: 'नए मतदाता के रूप में पंजीकरण करने के लिए, आप voters.eci.gov.in पर मतदाता सेवा पोर्टल पर जा सकते हैं और फॉर्म 6 भर सकते हैं।' },
@@ -59,19 +62,23 @@ const TRANSLATIONS: TranslationMap = {
     en: 'Walk through the complete voting process — from entering the booth to using the EVM.',
     hi: 'मतदान की पूरी प्रक्रिया जानें — बूथ में प्रवेश से लेकर ईवीएम का उपयोग करने तक।'
   },
-
-  'feature.chatbot.title': { en: 'Ask Questions', hi: 'सवाल पूछें' },
-  'feature.chatbot.desc': {
-    en: 'Have doubts? Ask our AI assistant anything about elections, voting rights, and more.',
-    hi: 'कोई सवाल है? हमारे AI सहायक से चुनाव, मतदान अधिकारों के बारे में कुछ भी पूछें।'
+  'feature.booth.title': { en: 'Inside the Polling Booth', hi: 'मतदान केंद्र के अंदर' },
+  'feature.booth.desc': {
+    en: 'Experience a step-by-step interactive simulation of the physical journey inside a polling station.',
+    hi: 'मतदान केंद्र के अंदर की शारीरिक यात्रा का चरण-दर-चरण संवादात्मक सिमुलेशन अनुभव करें।'
+  },
+  'feature.rights.title': { en: 'Voter Rights & Duties', hi: 'मतदाता के अधिकार और कर्तव्य' },
+  'feature.rights.desc': {
+    en: 'Learn about the secret ballot, NOTA, and your responsibility as a citizen of India.',
+    hi: 'गुप्त मतदान, नोटा और भारत के नागरिक के रूप में अपनी जिम्मेदारी के बारे में जानें।'
   },
 
   // Statistics
   'stats.title': { en: 'Indian Democracy in Numbers', hi: 'संख्याओं में भारतीय लोकतंत्र' },
   'stats.elections': { en: 'General Elections Held', hi: 'आम चुनाव आयोजित' },
-  'stats.voters': { en: 'Registered Voters (2024)', hi: 'पंजीकृत मतदाता (2024)' },
+  'stats.voters': { en: 'Registered Voters (2026)', hi: 'पंजीकृत मतदाता (2026)' },
   'stats.constituencies': { en: 'Lok Sabha Constituencies', hi: 'लोकसभा निर्वाचन क्षेत्र' },
-  'stats.turnout': { en: 'Avg. Voter Turnout (2024)', hi: 'औसत मतदान प्रतिशत (2024)' },
+  'stats.turnout': { en: 'Avg. Voter Turnout (2026)', hi: 'औसत मतदान प्रतिशत (2026)' },
 
   // Footer
   'footer.disclaimer': {
@@ -98,6 +105,14 @@ const TRANSLATIONS: TranslationMap = {
 
   // Voting Journey Steps
   'journey.title': { en: 'Voting Day Journey', hi: 'मतदान दिवस की यात्रा' },
+  'journey.lok-sabha.title': { en: 'Lok Sabha', hi: 'लोकसभा' },
+  'journey.lok-sabha.context': { en: 'General Elections for Member of Parliament.', hi: 'संसद सदस्य के लिए आम चुनाव।' },
+  'journey.vidhan-sabha.title': { en: 'Vidhan Sabha', hi: 'विधानसभा' },
+  'journey.vidhan-sabha.context': { en: 'State Assembly Elections for MLA.', hi: 'विधायक के लिए राज्य विधानसभा चुनाव।' },
+  'journey.panchayat.title': { en: 'Panchayat', hi: 'पंचायत' },
+  'journey.panchayat.context': { en: 'Rural Local Body Elections.', hi: 'ग्रामीण स्थानीय निकाय चुनाव।' },
+  'journey.municipal.title': { en: 'Municipal', hi: 'नगर पालिका' },
+  'journey.municipal.context': { en: 'Urban Local Body Elections.', hi: 'शहरी स्थानीय निकाय चुनाव।' },
   'journey.step1.title': { en: 'Before Election Day', hi: 'चुनाव के दिन से पहले' },
   'journey.step1.desc': { en: 'Ensure your name is in the voter list and locate your polling booth. Check your Voter ID (EPIC) details.', hi: 'सुनिश्चित करें कि आपका नाम मतदाता सूची में है और अपने मतदान केंद्र का पता लगाएं। अपने वोटर आईडी (EPIC) विवरण की जांच करें।' },
   

@@ -8,11 +8,9 @@ import { firstValueFrom } from 'rxjs';
 export class ChatbotService {
   private api = inject(ApiService);
 
-  async sendMessage(prompt: string, history: any[] = []) {
+  async sendMessage(prompt: string, history: any[] = [], electionType?: string) {
     try {
-      // Convert history to format expected by backend if needed, 
-      // but here we just pass it through
-      const response = await firstValueFrom(this.api.sendMessage(prompt, history));
+      const response = await firstValueFrom(this.api.sendMessage(prompt, history, electionType));
       return response.text;
     } catch (error) {
       console.error('Chat API Error:', error);

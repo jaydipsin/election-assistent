@@ -4,11 +4,12 @@ import { RouterLink } from '@angular/router';
 import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 import { LanguageService } from '@core/services/language.service';
 import { ElectionDataService } from '@core/services/election-data.service';
+import { PollingBoothAnimationComponent } from '../polling-booth-animation/polling-booth-animation.component';
 
 @Component({
   selector: 'app-voting-journey',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, PollingBoothAnimationComponent],
   templateUrl: './voting-journey.component.html',
   styleUrl: './voting-journey.component.scss',
   animations: [
@@ -36,6 +37,7 @@ export class VotingJourneyComponent {
 
   currentStep = signal(1);
   totalSteps = 8;
+  showBoothAnimation = signal(false);
 
   // EVM Simulation State
   isVoting = signal(false);
@@ -48,20 +50,17 @@ export class VotingJourneyComponent {
   nextStep(): void {
     if (this.currentStep() < this.totalSteps) {
       this.currentStep.update(s => s + 1);
-      window.scrollTo(0, 0);
     }
   }
 
   prevStep(): void {
     if (this.currentStep() > 1) {
       this.currentStep.update(s => s - 1);
-      window.scrollTo(0, 0);
     }
   }
 
   goToStep(step: number): void {
     this.currentStep.set(step);
-    window.scrollTo(0, 0);
   }
 
   simulateVote(candidate: string): void {

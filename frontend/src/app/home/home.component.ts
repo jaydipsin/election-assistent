@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
       iconType: 'voter',
       titleKey: 'feature.firstTimeVoter.title',
       descKey: 'feature.firstTimeVoter.desc',
-      route: '/voting-guide',
+      route: '/first-time-voter',
       accent: 'saffron'
     },
     {
@@ -43,18 +43,11 @@ export class HomeComponent implements OnInit {
       accent: 'navy'
     },
     {
-      iconType: 'process',
-      titleKey: 'feature.votingProcess.title',
-      descKey: 'feature.votingProcess.desc',
+      iconType: 'booth',
+      titleKey: 'feature.booth.title',
+      descKey: 'feature.booth.desc',
       route: '/voting-journey',
       accent: 'green'
-    },
-    {
-      iconType: 'chatbot',
-      titleKey: 'feature.chatbot.title',
-      descKey: 'feature.chatbot.desc',
-      route: '/chatbot',
-      accent: 'saffron'
     }
   ];
 

@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ApiService } from './api.service';
 
@@ -11,9 +11,16 @@ export class ElectionDataService {
   
   private progressSource = new BehaviorSubject<any>({});
   progress$ = this.progressSource.asObservable();
+  
+  currentElectionType = signal<string | null>(localStorage.getItem('matdaan_election_type'));
 
   constructor() {
     this.initSession();
+  }
+
+  setElectionType(type: string) {
+    this.currentElectionType.set(type);
+    localStorage.setItem('matdaan_election_type', type);
   }
 
   private initSession() {
