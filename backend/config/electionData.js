@@ -35,6 +35,7 @@ module.exports = {
     "title": "Panchayat (Rural Local Bodies)",
     "context": "Choosing the 3-tier rural local government (Panchayat Samiti, Zila Parishad, Gram Panchayat).",
     "rules": [
+      "Voter must be 18+ years of age.",
       "CRITICAL: Name MUST be on the State Election Commission's local ward roll.",
       "Specific for rural residents of the respective village/ward."
     ],
@@ -51,6 +52,7 @@ module.exports = {
     "title": "Municipal (Urban Local Bodies)",
     "context": "Choosing urban city/town leadership (Corporators and Mayor).",
     "rules": [
+      "Voter must be 18+ years of age.",
       "CRITICAL: Name MUST be on the State Election Commission's urban ward roll.",
       "Specific for urban residents of the respective ward."
     ],

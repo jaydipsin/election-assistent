@@ -31,24 +31,19 @@ export class ElectionDataService {
       localStorage.setItem('matdaan_session_id', this.sessionId);
     }
 
-    // Initial fetch of progress
-    this.api.getProgress(this.sessionId).subscribe({
-      next: (data) => this.progressSource.next(data),
-      error: (err) => console.error('Failed to load initial progress', err)
-    });
+    // Initial fetch of progress from LocalStorage
+    const savedProgress = localStorage.getItem('matdaan_progress');
+    if (savedProgress) {
+      this.progressSource.next(JSON.parse(savedProgress));
+    }
   }
 
   updateProgress(step: string, status: boolean) {
-    if (!this.sessionId) return;
+    const current = this.progressSource.value;
+    const newProgress = { ...current, [step]: status };
     
-    this.api.updateProgress(this.sessionId, step, status).subscribe({
-      next: () => {
-        // Optimistically update local state
-        const current = this.progressSource.value;
-        this.progressSource.next({ ...current, [step]: status });
-      },
-      error: (err) => console.error('Failed to update progress', err)
-    });
+    this.progressSource.next(newProgress);
+    localStorage.setItem('matdaan_progress', JSON.stringify(newProgress));
   }
 
   getSessionId() {
