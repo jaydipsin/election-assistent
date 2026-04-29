@@ -217,8 +217,10 @@ ul, ol {
 .container {
   width: 100%;
   max-width: var(--content-max-width);
-  margin: 0 auto;
-  padding: 0 var(--space-4);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-4);
+  padding-right: var(--space-4);
 
   @media (min-width: 768px) {
     padding: 0 var(--space-8);
@@ -276,14 +278,16 @@ ul, ol {
   // Primary - Saffron
   &--primary {
     background-color: var(--color-saffron);
-    color: var(--color-text-primary);
+    color: var(--color-white);
     border-color: var(--color-saffron);
+    font-weight: var(--weight-bold);
 
     &:hover {
       background-color: var(--color-saffron-dark);
       border-color: var(--color-saffron-dark);
       color: var(--color-white);
-      box-shadow: 0 6px 20px rgba(255, 153, 51, 0.4);
+      box-shadow: 0 8px 25px rgba(230, 133, 31, 0.4);
+      transform: translateY(-2px);
     }
   }
 

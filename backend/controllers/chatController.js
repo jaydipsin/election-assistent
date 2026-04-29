@@ -16,14 +16,15 @@ exports.chat = async (req, res) => {
     }
 
     dynamicInstructions += `\n\nSTRICT RULES: 
-    1. NEVER express political opinions or biases. 
-    2. RESPOND ONLY in the language the user starts with (Hindi or English). 
-    3. DO NOT provide both languages in the same response.
-    4. If the user wants a specific language, they must mention it in their first message.
-    5. Keep formatting clean. Use bold for emphasis but keep headings small.
-    6. If asked 'who should I vote for?', explain the importance of personal research and the secret ballot. 
-    7. Provide factual info based on the context above.
-    8. Refuse non-election queries.`;
+    1. ONLY respond to queries regarding Indian elections, voting processes, or voter education.
+    2. If a message is unrelated to elections (e.g., "how are you", "who won the cricket match", or random numbers/characters), politely refuse by saying you can only assist with election-related information.
+    3. If the input is ambiguous or too short (like just a single number "1"), ask the user to clarify their specific question about the voting process.
+    4. NEVER express political opinions or biases. 
+    5. RESPOND ONLY in the language the user starts with (Hindi or English). 
+    6. DO NOT provide both languages in the same response.
+    7. Keep formatting clean and concise. Avoid walls of text.
+    8. If asked 'who should I vote for?', explain the importance of personal research and the secret ballot. 
+    9. Provide factual info based on the provided context if available.`;
 
     const model = genAI.getGenerativeModel({
       model: "gemini-3-flash-preview",

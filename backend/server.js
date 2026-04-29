@@ -4,18 +4,25 @@ const helmet = require('helmet');
 const dotenv = require('dotenv');
 const { initializeApp } = require('firebase/app');
 const { getDatabase, ref, get, update } = require('firebase/database');
+const path = require("path");
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const frontendPath = path.join(__dirname, "dist", "election-assistent", "browser");
 
-// Security & Middleware
-app.use(helmet());
+// Middlewares
+app.use(helmet({
+  contentSecurityPolicy: false,
+}));
 app.use(cors({
   origin: process.env.FRONTEND_URL || 'http://localhost:4200'
 }));
 app.use(express.json());
+app.use(express.static(frontendPath));
+
+
 
 // Firebase Client SDK Setup
 const firebaseConfig = {
@@ -48,17 +55,17 @@ app.use('/api/chat', chatRoutes);
 app.get('/api/progress/:sessionId', async (req, res) => {
   const { sessionId } = req.params;
   console.log(`[Database] Fetching progress for session: ${sessionId}`);
-  
+
   try {
     const progressRef = ref(db, `sessions/${sessionId}/progress`);
-    
+
     // Add a timeout promise to prevent hanging
-    const timeoutPromise = new Promise((_, reject) => 
+    const timeoutPromise = new Promise((_, reject) =>
       setTimeout(() => reject(new Error('Firebase timeout')), 5000)
     );
 
     const snapshot = await Promise.race([get(progressRef), timeoutPromise]);
-    
+
     console.log(`[Database] Successfully retrieved data for ${sessionId}`);
     res.json(snapshot.val() || {});
   } catch (error) {
@@ -77,6 +84,11 @@ app.post('/api/progress/:sessionId', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: 'Failed to update progress' });
   }
+});
+
+// Catch-all route for frontend (must be last)
+app.get(/.*/, (req, res) => {
+  res.sendFile(path.join(frontendPath, "index.html"));
 });
 
 app.listen(PORT, () => {

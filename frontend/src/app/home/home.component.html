@@ -14,15 +14,15 @@
           <p class="hero__subtitle">
             {{ lang.t('hero.subtitle') }}
           </p>
-          <!-- <div class="hero__actions">
-            <a routerLink="/voting-guide" class="btn btn--primary btn--lg">
-              {{ lang.t('hero.cta') }}
+          <div class="hero__actions">
+            <a routerLink="/election-types" class="btn btn--primary btn--lg">
+              {{ lang.language() === 'en' ? 'Get Started' : 'शुरू करें' }}
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
                 <polyline points="12 5 19 12 12 19"></polyline>
               </svg>
             </a>
-          </div> -->
+          </div>
           <div class="hero__trust">
             <div class="hero__trust-item">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -146,15 +146,17 @@
   <!-- CTA SECTION -->
   <section class="cta">
     <div class="container">
-      <div class="cta__content animate-fade-in-up">
-        <h2 class="cta__title">{{ lang.language() === 'en' ? 'Ready to cast your vote?' : 'वोट डालने के लिए तैयार हैं?' }}</h2>
-        <p class="cta__desc">
-          {{ lang.language() === 'en' ? 'Quickly verify your name in the official Electoral Roll and locate your designated polling station via the ECI Portal.' : 'आधिकारिक मतदाता सूची में अपना नाम जल्दी से सत्यापित करें और ईसीआई पोर्टल के माध्यम से अपने निर्दिष्ट मतदान केंद्र का पता लगाएं।' }}
-        </p>
-        <div class="cta__actions">
-          <a href="https://electoralsearch.eci.gov.in/" target="_blank" class="btn btn--secondary btn--lg">
-            {{ lang.language() === 'en' ? 'Official Voter Search' : 'आधिकारिक मतदाता खोज' }}
-          </a>
+      <div class="cta__container">
+        <div class="cta__content animate-fade-in-up">
+          <h2 class="cta__title">{{ lang.language() === 'en' ? 'Ready to cast your vote?' : 'वोट डालने के लिए तैयार हैं?' }}</h2>
+          <p class="cta__desc">
+            {{ lang.language() === 'en' ? 'Quickly verify your name in the official Electoral Roll and locate your designated polling station via the ECI Portal.' : 'आधिकारिक मतदाता सूची में अपना नाम जल्दी से सत्यापित करें और ईसीआई पोर्टल के माध्यम से अपने निर्दिष्ट मतदान केंद्र का पता लगाएं।' }}
+          </p>
+          <div class="cta__actions">
+            <a href="https://electoralsearch.eci.gov.in/" target="_blank" class="btn btn--secondary btn--lg">
+              {{ lang.language() === 'en' ? 'Official Voter Search' : 'आधिकारिक मतदाता खोज' }}
+            </a>
+          </div>
         </div>
       </div>
     </div>
