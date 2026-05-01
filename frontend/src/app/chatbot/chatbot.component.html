@@ -17,15 +17,15 @@
     <div class="chat-container">
       <div class="chat-header">
         <div class="chat-header__info">
-          <div class="chat-header__status"></div>
+          <div class="chat-header__status" aria-hidden="true"></div>
           <span>Matdaan Assistant</span>
         </div>
         <div class="gemini-badge">Powered by Google Gemini</div>
       </div>
 
-      <div class="chat-messages" #scrollContainer>
+      <div class="chat-messages" #scrollContainer aria-live="polite" aria-relevant="additions">
         @for (msg of messages(); track $index) {
-          <div class="message" [class.message--user]="msg.isUser" [class.message--bot]="!msg.isUser">
+          <div class="message" [class.message--user]="msg.isUser" [class.message--bot]="!msg.isUser" [attr.aria-label]="msg.isUser ? 'You said' : 'Assistant said'">
             @if (msg.isUser) {
               {{ msg.text }}
             } @else {
@@ -34,7 +34,7 @@
           </div>
         }
         @if (isLoading()) {
-          <div class="message message--bot typing">...</div>
+          <div class="message message--bot typing" aria-label="Assistant is typing">...</div>
         }
       </div>
 
@@ -43,9 +43,10 @@
           type="text" 
           class="chat-input" 
           [placeholder]="lang.t('chatbot.placeholder')"
+          aria-label="Type your message"
           [(ngModel)]="userInput"
           name="userInput">
-        <button type="submit" class="send-btn" [disabled]="!userInput.trim() || isLoading()">
+        <button type="submit" class="send-btn" [disabled]="!userInput.trim() || isLoading()" aria-label="Send message">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="22" y1="2" x2="11" y2="13"></line>
             <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>

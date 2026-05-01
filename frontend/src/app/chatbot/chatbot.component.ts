@@ -1,4 +1,4 @@
-import { Component, inject, signal, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
+import { Component, inject, signal, ViewChild, ElementRef, AfterViewChecked, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { LanguageService } from '@core/services/language.service';
@@ -17,7 +17,8 @@ interface ChatMessage {
   standalone: true,
   imports: [RouterLink, FormsModule, SafeHtmlPipe],
   templateUrl: './chatbot.component.html',
-  styleUrl: './chatbot.component.scss'
+  styleUrl: './chatbot.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatbotComponent implements AfterViewChecked {
   lang = inject(LanguageService);
@@ -52,20 +53,29 @@ export class ChatbotComponent implements AfterViewChecked {
     const input = this.userInput.trim();
     if (!input || this.isLoading()) return;
 
-    this.messages.update(m => [...m, { text: input, isUser: true }]);
-    this.userInput = '';
-    this.isLoading.set(true);
+    try {
+      this.messages.update(m => [...m, { text: input, isUser: true }]);
+      this.userInput = '';
+      this.isLoading.set(true);
 
-    const response = await this.chatbotService.sendMessage(input, this.messages());
-    
-    // Parse markdown
-    const formatted = await this.markdownService.parse(response);
+      const response = await this.chatbotService.sendMessage(input, this.messages());
+      
+      // Parse markdown
+      const formatted = await this.markdownService.parse(response);
 
-    this.messages.update(m => [...m, { 
-      text: response, 
-      formattedText: formatted,
-      isUser: false 
-    }]);
-    this.isLoading.set(false);
+      this.messages.update(m => [...m, { 
+        text: response, 
+        formattedText: formatted,
+        isUser: false 
+      }]);
+    } catch (error) {
+      console.error('Chat Error:', error);
+      this.messages.update(m => [...m, { 
+        text: "Sorry, I encountered an error. Please try again.", 
+        isUser: false 
+      }]);
+    } finally {
+      this.isLoading.set(false);
+    }
   }
 }
